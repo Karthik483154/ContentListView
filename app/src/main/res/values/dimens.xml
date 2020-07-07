@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_default_margin">0dp</dimen>
+
+    <!--Recycler view margin scale -->
+    <dimen name="layout_margin">8dp</dimen>
+
+    <!--Title text in sp -->
+    <dimen name="content_title">24sp</dimen>
+
+    <!--Content Description text -->
+    <dimen name="content_description">16sp</dimen>
+
+    <!-- Content Error Message -->
+    <dimen name="content_error_message">16sp</dimen>
+
+</resources>

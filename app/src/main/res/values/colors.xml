@@ -3,4 +3,11 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <!--Card view background color -->
+    <color name="colorCardView">#EDEDED</color>
+    <!--Content title -->
+    <color name="colorTitle">#505283</color>
+    <!-- Content Description -->
+    <color name="colorDescription">#595959</color>
 </resources>
