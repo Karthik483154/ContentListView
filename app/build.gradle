@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.telstra.contentlistview"
         minSdkVersion 25
-        targetSdkVersion 29
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
 

@@ -54,8 +54,8 @@ class ContentAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userContentRow = userContentRowList[position]
 
-        holder.itemTitle.text = userContentRow.contentTitle
-        holder.itemDescription.text = userContentRow.contentDescription
+        holder.itemTitle.text = userContentRow.contentTitle ?: mContext.getString(R.string.app_default_title)
+        holder.itemDescription.text = userContentRow.contentDescription ?: mContext.getString(R.string.app_default_description)
 
         //Load the image with Picasso
         Picasso.get().load(userContentRow.contentImageHref)
