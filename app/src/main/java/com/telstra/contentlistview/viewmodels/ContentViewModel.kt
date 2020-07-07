@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.telstra.contentlistview.model.UserContent
-import com.telstra.contentlistview.model.UserContentApiService
+import com.telstra.contentlistview.service.UserContentApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,7 +41,7 @@ class ContentViewModel : ViewModel() {
     /**
      * This method is using Retrofit to get the JSON data from URL
      */
-    private fun loadUserContentData() {
+    fun loadUserContentData() {
         val retrofitClient = Retrofit.Builder()
             .baseUrl(UserContentApiService.baseURL)
             .addConverterFactory(GsonConverterFactory.create())

@@ -3,18 +3,17 @@ package com.telstra.contentlistview.view
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.telstra.contentlistview.R
 import com.telstra.contentlistview.model.UserContent
+import com.telstra.contentlistview.util.NetworkConnectionHandler
 import com.telstra.contentlistview.viewmodels.ContentViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Created by Karthikeyan 06/07/2020
@@ -30,20 +29,8 @@ class MainActivity : AppCompatActivity() {
 
     private var userContent: UserContent? = null
 
-    //Swipe Refresh Layout
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-
-    //Recycler View
-    private lateinit var recyclerView: RecyclerView
-
     //RecyclerView Adapter
     private lateinit var contentAdapter: ContentAdapter
-
-    //Progress bar view
-    private lateinit var progressBar: ProgressBar
-
-    //Content Error text view
-    private lateinit var contentErrorMessage: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,32 +46,28 @@ class MainActivity : AppCompatActivity() {
     /**
      * This method used to initialize the UI components from the main activity
      */
-    private fun initView() {
+    fun initView() {
         //Setting up the swipe refresh layout
-        swipeRefreshLayout = findViewById(R.id.swipeContentView)
-        swipeRefreshLayout.visibility = View.GONE
-        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(
+        swipeContentView.visibility = View.GONE
+        swipeContentView.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(
                 this,
                 R.color.colorPrimary
             )
         )
-        swipeRefreshLayout.setColorSchemeColors(Color.WHITE)
-        swipeRefreshLayout.setOnRefreshListener {
+        swipeContentView.setColorSchemeColors(Color.WHITE)
+        swipeContentView.setOnRefreshListener {
             loadDataModel()
         }
 
         //Setting up the recyclerview
-        recyclerView = findViewById(R.id.contentRecyclerView)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        contentRecyclerView.setHasFixedSize(true)
+        contentRecyclerView.layoutManager = LinearLayoutManager(this)
 
         //Setting up the progress bar view
-        progressBar = findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
 
         //Setting up the error message text view
-        contentErrorMessage = findViewById(R.id.contentErrorMessage)
         contentErrorMessage.visibility = View.GONE
     }
 
@@ -92,26 +75,40 @@ class MainActivity : AppCompatActivity() {
      * This method used to interact with View model to obtain the data from the model class.
      * Here ContentViewModel is ViewModel and MainActivity class act as a View
      */
-    private fun loadDataModel() {
-        val userContentModel: ContentViewModel =
-            ViewModelProviders.of(this).get(ContentViewModel::class.java)
-        userContentModel.userContentData.observe(this, Observer { userContentData: UserContent? ->
-            progressBar.visibility = View.GONE
-            swipeRefreshLayout.visibility = View.VISIBLE
-            swipeRefreshLayout.isRefreshing = false
+    fun loadDataModel() {
+        //Check the network connection status
+        if (NetworkConnectionHandler.isNetworkConnectionAvailable(this)) {
+            val userContentModel: ContentViewModel =
+                ViewModelProviders.of(this).get(ContentViewModel::class.java)
+            userContentModel.userContentData.observe(this, Observer { userContentData: UserContent? ->
+                progressBar.visibility = View.GONE
+                swipeContentView.visibility = View.VISIBLE
+                swipeContentView.isRefreshing = false
 
-            userContent = userContentData
-            //If the list is null
-            if (userContent == null) {
-                contentErrorMessage.visibility = View.VISIBLE
-                recyclerView.visibility = View.GONE
-            } else {
-                val actionBar = supportActionBar
-                actionBar!!.title = userContent!!.actionTitle
-                contentAdapter = ContentAdapter(this, userContent!!.userContentRows)
-                recyclerView.adapter = contentAdapter
-                contentAdapter.notifyDataSetChanged()
-            }
-        })
+                userContent = userContentData
+                //If the list is null
+                if (userContent == null) {
+                    contentErrorMessage.visibility = View.VISIBLE
+                    contentRecyclerView.visibility = View.GONE
+                } else {
+                    contentErrorMessage.visibility = View.GONE
+                    contentRecyclerView.visibility = View.VISIBLE
+
+                    val actionBar = supportActionBar
+                    actionBar!!.title = userContent!!.actionTitle
+                    contentAdapter = ContentAdapter(this, userContent!!.userContentRows)
+                    contentRecyclerView.adapter = contentAdapter
+                    contentAdapter.notifyDataSetChanged()
+                }
+            })
+        } else {
+            progressBar.visibility = View.GONE
+            contentRecyclerView.visibility = View.GONE
+            swipeContentView.isRefreshing = false
+            swipeContentView.visibility = View.VISIBLE
+            contentErrorMessage.visibility = View.VISIBLE
+            contentErrorMessage.text = getString(R.string.app_no_internet_message)
+            Toast.makeText(this, R.string.app_no_internet_message, Toast.LENGTH_LONG).show()
+        }
     }
 }

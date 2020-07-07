@@ -1,5 +1,6 @@
-package com.telstra.contentlistview.model
+package com.telstra.contentlistview.service
 
+import com.telstra.contentlistview.model.UserContent
 import retrofit2.Call
 import retrofit2.http.GET
 
