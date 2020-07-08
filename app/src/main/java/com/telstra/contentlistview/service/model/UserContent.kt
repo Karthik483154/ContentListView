@@ -1,5 +1,7 @@
-package com.telstra.contentlistview.model
+package com.telstra.contentlistview.service.model
 
+import androidx.annotation.Nullable
+import androidx.databinding.BaseObservable
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -13,9 +15,10 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class UserContent(
-
     @SerializedName("title")
+    @Nullable
     val actionTitle: String,
     @SerializedName("rows")
+    @Nullable
     val userContentRows: List<UserContentRows>
-)
+) : BaseObservable()

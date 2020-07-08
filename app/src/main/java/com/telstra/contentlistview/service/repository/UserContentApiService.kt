@@ -1,6 +1,6 @@
-package com.telstra.contentlistview.service
+package com.telstra.contentlistview.service.repository
 
-import com.telstra.contentlistview.model.UserContent
+import com.telstra.contentlistview.service.model.UserContent
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -23,5 +23,5 @@ interface UserContentApiService {
 
     //Makes http get request
     @GET("facts")
-    fun getUserContentData(): Call<UserContent>
+    fun getUserContentDetails(): Call<UserContent>
 }

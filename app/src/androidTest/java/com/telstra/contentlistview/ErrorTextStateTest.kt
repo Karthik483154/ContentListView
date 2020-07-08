@@ -7,7 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.telstra.contentlistview.view.MainActivity
+import com.telstra.contentlistview.view.ui.MainActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

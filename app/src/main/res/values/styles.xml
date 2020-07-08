@@ -8,4 +8,29 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Application Card view -->
+    <style name="AppCardView">
+        <item name="background">@color/colorCardView</item>
+        <item name="cardCornerRadius">6dp</item>
+        <item name="cardElevation">3dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="contentPadding">@dimen/layout_margin</item>
+    </style>
+
+    <style name="AppContentTitle">
+        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:textSize">@dimen/content_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">top|start</item>
+        <item name="android:layout_marginEnd">@dimen/content_title_margin</item>
+        <item name="android:layout_marginTop">@dimen/layout_margin</item>
+    </style>
+
+    <style name="AppContentDescription">
+        <item name="android:textColor">@color/colorDescription</item>
+        <item name="android:textSize">@dimen/content_description</item>
+        <item name="android:layout_marginEnd">@dimen/layout_margin</item>
+        <item name="android:layout_marginTop">@dimen/content_description</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
 </resources>

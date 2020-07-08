@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">ContentListView</string>
 
-    <string name="app_image_content_description">ContentImage</string>
-    <string name="app_default_title">No title</string>
-    <string name="app_default_description">No description</string>
+    <string name="app_image_content_description">Image</string>
     <string name="app_content_error">There is a problem with the resource you are looking for, and it cannot be displayed.</string>
     <string name="app_no_internet_message">Check your internet connection and try again</string>
+    <string name="app_content_list">Content List</string>
 </resources>

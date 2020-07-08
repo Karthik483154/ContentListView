@@ -14,4 +14,7 @@
     <!-- Content Error Message -->
     <dimen name="content_error_message">16sp</dimen>
 
+    <!--App Title Margin -->
+    <dimen name="content_title_margin">20dp</dimen>
+
 </resources>

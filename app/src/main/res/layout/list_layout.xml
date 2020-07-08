@@ -1,78 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/layout_margin"
-    android:background="@color/colorCardView"
-    app:contentPadding="@dimen/layout_margin"
-    card_view:cardCornerRadius="6dp"
-    card_view:cardElevation="3dp"
-    card_view:cardUseCompatPadding="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <data>
+
+        <variable
+            name="content"
+            type="com.telstra.contentlistview.service.model.UserContentRows" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/AppCardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/itemTitle"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/layout_margin"
-            android:ellipsize="end"
-            android:gravity="top|start"
-            android:textColor="@color/colorTitle"
-            android:textSize="@dimen/content_title"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/itemTitle"
-            android:layout_marginTop="@dimen/layout_margin"
-            android:layout_toStartOf="@+id/itemNavigation"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/itemTitle"
+                style="@style/AppContentTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1">
+                android:text="@{content.contentTitle}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/itemDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/layout_margin"
-                    android:ellipsize="end"
-                    android:textColor="@color/colorDescription"
-                    android:textSize="@dimen/content_description" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/itemDescription"
+                style="@style/AppContentDescription"
+                android:layout_width="@dimen/layout_default_margin"
+                android:layout_height="wrap_content"
+                android:text="@{content.contentDescription}"
+                app:layout_constraintEnd_toStartOf="@id/itemImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/itemTitle" />
 
             <ImageView
                 android:id="@+id/itemImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/layout_margin"
-                android:contentDescription="@string/app_image_content_description" />
+                android:contentDescription="@string/app_image_content_description"
+                app:contentImageHref="@{content.contentImageHref}"
+                app:layout_constraintEnd_toStartOf="@id/itemNavigation"
+                app:layout_constraintTop_toBottomOf="@+id/itemTitle" />
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/itemNavigation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_image_content_description"
+                android:src="@drawable/ic_nav"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/itemNavigation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_marginEnd="@dimen/layout_margin"
-            android:contentDescription="@string/app_image_content_description"
-            android:src="@drawable/ic_nav" />
 
-    </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
+

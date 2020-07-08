@@ -1,6 +1,6 @@
 package com.telstra.contentlistview
 
-import com.telstra.contentlistview.service.UserContentApiService
+import com.telstra.contentlistview.service.repository.UserContentApiService
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After

@@ -1,5 +1,6 @@
-package com.telstra.contentlistview.model
+package com.telstra.contentlistview.service.model
 
+import androidx.annotation.Nullable
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -14,9 +15,12 @@ import com.google.gson.annotations.SerializedName
 
 data class UserContentRows(
     @SerializedName("title")
+    @Nullable
     val contentTitle: String,
     @SerializedName("description")
+    @Nullable
     val contentDescription: String,
     @SerializedName("imageHref")
+    @Nullable
     val contentImageHref: String
 )

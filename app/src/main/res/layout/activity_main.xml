@@ -1,57 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContentView"
+    <data>
+
+        <variable
+            name="content"
+            type="com.telstra.contentlistview.service.model.UserContent" />
+
+        <variable
+            name="isProgressLoading"
+            type="boolean" />
+
+        <variable
+            name="isShowContent"
+            type="boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/layout_margin"
-        android:layout_marginTop="@dimen/layout_margin"
-        android:layout_marginEnd="@dimen/layout_margin"
-        android:layout_marginBottom="@dimen/layout_margin">
+        android:orientation="vertical"
+        tools:context=".view.ui.MainActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/contentRecyclerView"
-            android:layout_width="@dimen/layout_default_margin"
-            android:layout_height="@dimen/layout_default_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/contentToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="@dimen/recyclerview_margin"
-            tools:layout_editor_absoluteY="@dimen/recyclerview_margin">
+            app:title="@{content.actionTitle}" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentToolBar"
+            tools:context=".view.ui.MainActivity">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeContentView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:layout_marginEnd="@dimen/layout_margin"
+                android:layout_marginBottom="@dimen/layout_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibleGone="@{!isProgressLoading}">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/colorPrimary"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/contentRecyclerView"
+                    android:layout_width="@dimen/layout_default_margin"
+                    android:layout_height="@dimen/layout_default_margin"
+                    android:contentDescription="@string/app_content_list"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:visibleError="@{isShowContent}"
+                    tools:layout_editor_absoluteX="@dimen/recyclerview_margin"
+                    tools:layout_editor_absoluteY="@dimen/recyclerview_margin">
 
-    <TextView
-        android:id="@+id/contentErrorMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/app_content_error"
-        android:textSize="@dimen/content_error_message"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.recyclerview.widget.RecyclerView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibleGone="@{isProgressLoading}" />
+
+            <TextView
+                android:id="@+id/contentErrorMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/app_content_error"
+                android:textSize="@dimen/content_error_message"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibleError="@{!isShowContent}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
